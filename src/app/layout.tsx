@@ -12,11 +12,16 @@ export const metadata: Metadata = {
   description: "El marketplace de República Dominicana para compras a suplidores y tiendas locales.",
 };
 
-export default function RootLayout({
+import { auth } from "@/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const role = (session?.user as any)?.role;
+
   return (
     <html lang="es" className={`${outfit.variable}`}>
       <body>
@@ -26,7 +31,15 @@ export default function RootLayout({
             <div className="nav-links">
               <a href="/">Catálogo</a>
               <a href="/cart">Carrito (0)</a>
-              <a href="/vendor/dashboard" className="btn btn-primary">Vender aquí</a>
+              {role === "ADMIN" ? (
+                <a href="/admin" className="btn" style={{ background: "linear-gradient(90deg, #b8860b, #daa520)", color: "white", fontWeight: "bold" }}>👑 Panel Admin</a>
+              ) : role === "VENDOR" ? (
+                <a href="/vendor/dashboard" className="btn btn-primary">Panel Vendedor</a>
+              ) : session ? (
+                <a href="/vendor/onboarding" className="btn btn-primary">Vender aquí</a>
+              ) : (
+                <a href="/login" className="btn btn-primary">Iniciar Sesión</a>
+              )}
             </div>
           </div>
         </nav>

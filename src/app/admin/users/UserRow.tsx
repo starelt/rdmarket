@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { updateUserCredentials } from "@/actions/user";
 
+import { suspendStore, activateStore, addPenalty } from "@/actions/admin";
+
 export default function UserRow({ user, store }: { user: any, store: any }) {
   const [isEditing, setIsEditing] = useState(false);
   const [email, setEmail] = useState(user.email);
@@ -50,7 +52,7 @@ export default function UserRow({ user, store }: { user: any, store: any }) {
           ) : "-"}
         </td>
         <td>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
             <button 
               onClick={() => setIsEditing(!isEditing)}
               style={{ background: "transparent", border: "1px solid var(--primary)", color: "var(--primary)", padding: "0.4rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: "bold" }}>
@@ -59,6 +61,40 @@ export default function UserRow({ user, store }: { user: any, store: any }) {
             <button style={{ background: "transparent", border: "1px solid #ef4444", color: "#ef4444", padding: "0.4rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: "bold" }}>
               🗑️ Eliminar
             </button>
+            
+            {store && (
+              <>
+                <button 
+                  onClick={async () => {
+                    if (store.status === "SUSPENDED") {
+                      await activateStore(store.id);
+                    } else {
+                      if(confirm("¿Seguro que quieres suspender esta tienda?")) {
+                        await suspendStore(store.id);
+                      }
+                    }
+                  }}
+                  style={{ background: store.status === "SUSPENDED" ? "#10b981" : "#ef4444", color: "white", padding: "0.4rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: "bold", border: "none" }}>
+                  {store.status === "SUSPENDED" ? "✅ Reactivar" : "🚫 Suspender"}
+                </button>
+                
+                <button 
+                  onClick={async () => {
+                    const amount = prompt("Monto de la multa a cobrar en DOP:");
+                    if(amount && !isNaN(Number(amount))) {
+                      await addPenalty(store.id, Number(amount));
+                    }
+                  }}
+                  style={{ background: "#f59e0b", color: "white", padding: "0.4rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: "bold", border: "none" }}>
+                  💰 Multar
+                </button>
+
+                <a href={`/admin/store/${store.id}/products`}
+                  style={{ background: "var(--primary)", color: "white", padding: "0.4rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: "bold", border: "none", textDecoration: "none" }}>
+                  📦 Ver Productos
+                </a>
+              </>
+            )}
           </div>
         </td>
       </tr>

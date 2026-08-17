@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import VerificationActions from "./VerificationActions";
 
 export const dynamic = "force-dynamic";
 
@@ -59,11 +60,7 @@ export default async function AdminVerificationsPage() {
                 <p style={{ color: "var(--text-muted)", margin: 0 }}>{store.exactLocation || "Sin ubicación registrada"}</p>
               </div>
 
-              <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                {/* Simulamos la aprobación por ahora (En producción esto llamaría un Server Action) */}
-                <button className="btn btn-primary" style={{ flex: 1, padding: "1rem", background: "#10b981", border: "none" }}>✅ APROBAR TIENDA</button>
-                <button className="btn" style={{ flex: 1, padding: "1rem", background: "transparent", border: "1px solid #ef4444", color: "#ef4444" }}>❌ RECHAZAR POR FRAUDE</button>
-              </div>
+              <VerificationActions storeId={store.id} />
             </div>
           ))}
         </div>

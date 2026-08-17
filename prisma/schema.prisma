@@ -70,6 +70,7 @@ model Store {
   ownerId          String
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
+  penaltyBalance   Float         @default(0)
   orderItems       OrderItem[]
   products         Product[]
   owner            User          @relation(fields: [ownerId], references: [id])
