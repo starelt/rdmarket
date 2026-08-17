@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // Necesario para algunas plataformas como Supabase
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password      String?
+  role          String    @default("BUYER")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  image         String?
+  emailVerified DateTime?
+  accounts      Account[]
+  orders        Order[]
+  sessions      Session[]
+  stores        Store[]
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Store {
+  id               String        @id @default(uuid())
+  name             String
+  description      String?
+  logo             String?
+  bannerImage      String?
+  ownerPhoto       String?
+  teamPhoto        String?
+  status           String        @default("PENDING")
+  identityDocument String?
+  storeVideoProof  String?
+  exactLocation    String?
+  phoneNumber      String?
+  rnc              String?
+  companyLegalName String?
+  paypalEmail      String?
+  paypalMerchantId String?
+  ownerId          String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  orderItems       OrderItem[]
+  products         Product[]
+  owner            User          @relation(fields: [ownerId], references: [id])
+  transactions     Transaction[]
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  netCost     Float?      @default(0)
+  basePrice   Float       @default(0)
+  price       Float
+  taxRate     Float       @default(0)
+  stock       Int         @default(0)
+  isActive    Boolean     @default(true)
+  image       String?
+  storeId     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+  store       Store       @relation(fields: [storeId], references: [id])
+}
+
+model Order {
+  id                String      @id @default(uuid())
+  buyerId           String
+  totalAmount       Float
+  status            String      @default("PENDING")
+  shippingAddress   String?
+  shippingStatus    String      @default("PENDING")
+  courier           String?
+  trackingNumber    String?
+  
+  // Comprobantes Fiscales
+  requiresTaxReceipt Boolean    @default(false)
+  buyerRnc          String?
+  buyerCompanyName  String?
+  ncf               String?
+
+  // Pagos
+  paypalOrderId     String?
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  shippingRating    Int?
+  shippingReview    String?
+  packingPhotoProof String?
+  packingVideoProof String?
+  buyer             User        @relation(fields: [buyerId], references: [id])
+  items             OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  storeId   String
+  quantity  Int
+  price     Float
+  store     Store   @relation(fields: [storeId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  storeId     String
+  amount      Float
+  type        String
+  description String
+  createdAt   DateTime @default(now())
+  store       Store    @relation(fields: [storeId], references: [id])
+}
