@@ -13,7 +13,7 @@ export default async function ShippingLabelPage({ params }: { params: Promise<{ 
   });
 
   // Mock de orden si no existe en BD (para pruebas)
-  const currentOrder = order || {
+  const currentOrder = (order as any) || {
     id: resolvedParams.id,
     trackingNumber: "DMX-987654321",
     courier: "Domex",
@@ -25,7 +25,7 @@ export default async function ShippingLabelPage({ params }: { params: Promise<{ 
     ]
   };
 
-  const store = currentOrder.items[0]?.store;
+  const store = currentOrder.items[0]?.store as any;
 
   return (
     <div style={{ background: "white", color: "black", minHeight: "100vh", padding: "2rem", fontFamily: "monospace" }}>
@@ -87,7 +87,7 @@ export default async function ShippingLabelPage({ params }: { params: Promise<{ 
         <div>
           <p style={{ margin: "0 0 0.5rem 0", fontWeight: "bold", fontSize: "0.8rem", color: "#555", textTransform: "uppercase" }}>Contenido del Paquete:</p>
           <ul style={{ margin: 0, paddingLeft: "1.5rem" }}>
-            {currentOrder.items.map((item, idx) => (
+            {currentOrder.items.map((item: any, idx: any) => (
               <li key={idx} style={{ marginBottom: "0.5rem", fontSize: "1.1rem" }}>
                 <strong>{item.quantity}x</strong> {item.product.name}
               </li>

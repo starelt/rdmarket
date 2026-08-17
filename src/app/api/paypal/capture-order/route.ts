@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    if (!session?.user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    if (!session?.user?.id) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
     const body = await req.json();
     const { orderID } = body; // El ID que retorna PayPal después de que el usuario aprueba en su popup

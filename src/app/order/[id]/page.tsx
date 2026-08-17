@@ -22,6 +22,7 @@ export default async function OrderTrackingPage({ params }: { params: Promise<{ 
     courier: "Domex",
     trackingNumber: "DMX-987654321",
     shippingAddress: "Av. Winston Churchill #123, Distrito Nacional",
+    packingVideoProof: null,
     items: [
       { product: { name: "Zapatos Nike Air", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200" }, store: { name: "Tienda Ejemplo" }, price: 3500, quantity: 1 }
     ]
