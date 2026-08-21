@@ -5,8 +5,12 @@ import Link from "next/link";
 export default async function VendorLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user) {
     redirect("/login");
+  }
+
+  if ((session.user as any).role !== "VENDOR") {
+    redirect("/");
   }
 
   return (
