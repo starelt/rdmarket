@@ -28,64 +28,61 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-900 flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/30 rounded-full blur-[100px] animate-pulse"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/30 rounded-full blur-[100px] animate-pulse"></div>
-
-      <div className="w-full max-w-md glass-card p-8 rounded-3xl z-10 animate-fade-in-up">
+    <main className="min-h-screen flex items-center justify-center p-6 bg-[#f2f2f2]">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] animate-fade-in-up">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-extrabold text-white mb-2">Crear Cuenta</h1>
-          <p className="text-gray-400">Únete a RDMarket</p>
+          <h1 className="text-3xl font-extrabold text-[#111] mb-2">Crear Cuenta</h1>
+          <p className="text-gray-500">Únete a RDMarket</p>
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm">
+          <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">Nombre Completo</label>
+            <label className="block text-gray-700 mb-2 text-sm font-bold">Nombre Completo</label>
             <input 
               name="name"
               type="text" 
               required
               placeholder="Juan Pérez"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#ff4747] focus:ring-1 focus:ring-[#ff4747] transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">Correo Electrónico</label>
+            <label className="block text-gray-700 mb-2 text-sm font-bold">Correo Electrónico</label>
             <input 
               name="email"
               type="email" 
               required
               placeholder="tu@correo.com"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#ff4747] focus:ring-1 focus:ring-[#ff4747] transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">Contraseña</label>
+            <label className="block text-gray-700 mb-2 text-sm font-bold">Contraseña</label>
             <input 
               name="password"
               type="password" 
               required
               placeholder="••••••••"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#ff4747] focus:ring-1 focus:ring-[#ff4747] transition-all"
             />
           </div>
           
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">¿Qué deseas hacer?</label>
+            <label className="block text-gray-700 mb-2 text-sm font-bold">¿Qué deseas hacer?</label>
             <select 
               name="role"
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-500 transition-colors appearance-none"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-[#ff4747] focus:ring-1 focus:ring-[#ff4747] transition-all"
             >
-              <option value="BUYER" className="bg-gray-800">Quiero Comprar</option>
-              <option value="VENDOR" className="bg-gray-800">Quiero Vender</option>
+              <option value="BUYER">Quiero Comprar</option>
+              <option value="VENDOR">Quiero Vender</option>
             </select>
           </div>
 
@@ -93,7 +90,7 @@ export default function RegisterPage() {
             <button 
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 disabled:opacity-50 text-white font-bold rounded-xl shadow-lg transform transition hover:-translate-y-1"
+              className="w-full py-4 bg-[#ff4747] hover:bg-[#e62e2e] disabled:opacity-50 text-white font-bold rounded-xl shadow-md transform transition hover:-translate-y-1"
             >
               {loading ? "Registrando..." : "Registrarse"}
             </button>
@@ -101,14 +98,14 @@ export default function RegisterPage() {
         </form>
 
         <div className="my-6 flex items-center gap-4">
-          <div className="h-px bg-white/10 flex-1"></div>
-          <span className="text-gray-500 text-sm font-medium">O continúa con</span>
-          <div className="h-px bg-white/10 flex-1"></div>
+          <div className="h-px bg-gray-200 flex-1"></div>
+          <span className="text-gray-400 text-sm font-medium">O continúa con</span>
+          <div className="h-px bg-gray-200 flex-1"></div>
         </div>
 
         <button 
           onClick={() => signIn("google")}
-          className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium rounded-xl transition-all"
+          className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold rounded-xl transition-all shadow-sm"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -119,8 +116,8 @@ export default function RegisterPage() {
           Google
         </button>
 
-        <p className="text-center text-gray-400 mt-6 text-sm">
-          ¿Ya tienes cuenta? <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-medium">Inicia sesión</Link>
+        <p className="text-center text-gray-500 mt-6 text-sm">
+          ¿Ya tienes cuenta? <Link href="/login" className="text-[#ff4747] hover:text-[#e62e2e] font-bold">Inicia sesión</Link>
         </p>
       </div>
     </main>
