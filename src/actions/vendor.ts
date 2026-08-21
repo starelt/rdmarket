@@ -21,3 +21,24 @@ export async function updateStoreSettings(storeId: string, data: any) {
     return { success: false, message: "Error al actualizar." };
   }
 }
+
+import { getStoreForVendor } from "@/actions/store";
+
+export async function submitKyc(location: string) {
+  try {
+    const store = await getStoreForVendor();
+    if (!store) throw new Error("Store not found");
+
+    await prisma.store.update({
+      where: { id: store.id },
+      data: {
+        exactLocation: location,
+        status: "PENDING"
+      }
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error submitKyc:", error);
+    return { success: false };
+  }
+}

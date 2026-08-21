@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 export default function VendorOnboardingPage() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState("");
   const router = useRouter();
 
   const handleNext = (e: React.FormEvent) => {
@@ -16,11 +17,13 @@ export default function VendorOnboardingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simular envío de KYC a la base de datos
+    // Simular envío de KYC a la base de datos e insertar location real
+    const { submitKyc } = await import("@/actions/vendor");
+    await submitKyc(location);
     setTimeout(() => {
       setLoading(false);
       setStep(4); // Pantalla de éxito
-    }, 2000);
+    }, 1500);
   };
 
   return (
@@ -80,9 +83,46 @@ export default function VendorOnboardingPage() {
                 <input required type="tel" placeholder="(809) 000-0000" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                Dirección Física (Con coordenadas si es posible)
-                <textarea required placeholder="Ej. Av. Winston Churchill, Plaza Central, Local 14B..." style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white", minHeight: "100px" }} />
+                Dirección Física o ID de Ubicación
+                <textarea 
+                  required 
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Ej. Av. Winston Churchill, Plaza Central, Local 14B... o pega el Link de Google Maps" 
+                  style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white", minHeight: "100px" }} 
+                />
               </label>
+              <button 
+                type="button" 
+                onClick={() => {
+                  if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                      (pos) => {
+                        const coords = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+                        setLocation((prev) => prev ? `${prev}\nCoordenadas: ${coords}` : `Coordenadas: ${coords}`);
+                      },
+                      (err) => alert("No se pudo obtener la ubicación. Asegúrate de dar permisos.")
+                    );
+                  } else {
+                    alert("Tu navegador no soporta geolocalización.");
+                  }
+                }}
+                style={{ 
+                  background: "rgba(255, 255, 255, 0.1)", 
+                  border: "1px solid var(--border)", 
+                  padding: "0.75rem", 
+                  borderRadius: "8px", 
+                  color: "white", 
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  fontWeight: "bold"
+                }}
+              >
+                📍 Usar mi ubicación actual
+              </button>
             </div>
             <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
               <button type="button" onClick={() => setStep(1)} className="btn" style={{ flex: 1 }}>Atrás</button>
