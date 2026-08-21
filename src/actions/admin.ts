@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
 
 async function requireAdmin() {
   const session = await auth();
@@ -88,4 +89,52 @@ export async function addPenalty(storeId: string, amount: number) {
     }
   });
   revalidatePath("/admin/users");
+}
+
+export async function createAdminUser(formData: FormData) {
+  await requireAdmin();
+  
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const role = formData.get("role") as any;
+
+  if (!name || !email || !password || !role) {
+    return { error: "Todos los campos son obligatorios" };
+  }
+
+  const existing = await prisma.user.findUnique({ where: { email } });
+  if (existing) {
+    return { error: "El correo ya está registrado" };
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role
+    }
+  });
+
+  revalidatePath("/admin/users");
+  return { success: true };
+}
+
+export async function deleteUser(userId: string) {
+  await requireAdmin();
+  
+  const session = await auth();
+  if (session?.user?.id === userId) {
+    return { error: "No puedes eliminar tu propia cuenta" };
+  }
+  
+  await prisma.user.delete({
+    where: { id: userId }
+  });
+  
+  revalidatePath("/admin/users");
+  return { success: true };
 }

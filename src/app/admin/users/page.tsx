@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import UserRow from "./UserRow";
+import CreateUserModal from "./CreateUserModal";
 
 export const dynamic = "force-dynamic";
 
@@ -11,15 +12,18 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="animate-fade-in-up">
-      <h1 style={{ fontSize: "2rem", marginBottom: "2rem" }}>👥 Gestión de Usuarios y Tiendas</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: "2rem", margin: 0, color: "#111" }}>👥 Gestión de Usuarios y Tiendas</h1>
+        <CreateUserModal />
+      </div>
       <p style={{ color: "var(--text-muted)", marginBottom: "3rem" }}>
         Administra todas las cuentas registradas en la plataforma. Puedes suspender tiendas o eliminar usuarios.
       </p>
 
-      <div className="glass" style={{ padding: "2rem", borderRadius: "16px" }}>
+      <div style={{ background: "white", padding: "2rem", borderRadius: "16px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
           <thead>
-            <tr style={{ borderBottom: "1px solid var(--border)", color: "var(--text-muted)" }}>
+            <tr style={{ borderBottom: "1px solid #eee", color: "#666" }}>
               <th style={{ padding: "1rem 0" }}>Usuario</th>
               <th>Rol</th>
               <th>Tienda Vinculada</th>
