@@ -7,6 +7,8 @@ export default function VendorOnboardingPage() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const router = useRouter();
 
   const handleNext = (e: React.FormEvent) => {
@@ -61,8 +63,20 @@ export default function VendorOnboardingPage() {
                 Foto Frontal de la Cédula/Pasaporte
                 <div style={{ padding: "2rem", textAlign: "center", border: "2px dashed var(--primary)", borderRadius: "8px", cursor: "pointer", background: "rgba(var(--primary-rgb), 0.05)" }}>
                   <span style={{ fontSize: "2rem" }}>📄</span>
-                  <p style={{ marginTop: "0.5rem", color: "var(--text-muted)" }}>Haz clic para subir documento (PDF/JPG)</p>
-                  <input type="file" required accept="image/*,.pdf" style={{ display: "none" }} />
+                  <p style={{ marginTop: "0.5rem", color: "var(--text-muted)" }}>
+                    {documentFile ? documentFile.name : "Haz clic para subir documento (PDF/JPG)"}
+                  </p>
+                  <input 
+                    type="file" 
+                    required 
+                    accept="image/*,.pdf" 
+                    style={{ display: "none" }} 
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        setDocumentFile(e.target.files[0]);
+                      }
+                    }}
+                  />
                 </div>
               </label>
             </div>
@@ -147,7 +161,21 @@ export default function VendorOnboardingPage() {
               Sube tu Video de Verificación (MP4, Máx 50MB)
               <div style={{ padding: "3rem", textAlign: "center", border: "2px dashed #ef4444", borderRadius: "8px", cursor: "pointer", background: "rgba(255,255,255,0.02)" }}>
                 <span style={{ fontSize: "2.5rem" }}>🎥</span>
-                <p style={{ marginTop: "1rem", fontWeight: "bold" }}>Haz clic para seleccionar o grabar video</p>
+                <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
+                  {videoFile ? videoFile.name : "Haz clic para seleccionar o grabar video"}
+                </p>
+                <input 
+                  type="file" 
+                  required 
+                  accept="video/mp4,video/*" 
+                  capture="environment" 
+                  style={{ display: "none" }} 
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setVideoFile(e.target.files[0]);
+                    }
+                  }}
+                />
               </div>
             </label>
 
