@@ -51,11 +51,11 @@ export default function VendorOnboardingPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Nombre Completo del Propietario
-                <input required type="text" placeholder="Ej. Juan Pérez" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+                <input required type="text" placeholder="Ej. Juan Pérez" style={{ padding: "1rem", borderRadius: "8px", background: "var(--secondary)", border: "1px solid var(--border)", color: "var(--text-color)" }} />
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Cédula de Identidad o Pasaporte
-                <input required type="text" placeholder="000-0000000-0" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+                <input required type="text" placeholder="000-0000000-0" style={{ padding: "1rem", borderRadius: "8px", background: "var(--secondary)", border: "1px solid var(--border)", color: "var(--text-color)" }} />
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Foto Frontal de la Cédula/Pasaporte
@@ -76,11 +76,11 @@ export default function VendorOnboardingPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Nombre Comercial de la Tienda
-                <input required type="text" placeholder="Ej. ElectroMundo RD" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+                <input required type="text" placeholder="Ej. ElectroMundo RD" style={{ padding: "1rem", borderRadius: "8px", background: "var(--secondary)", border: "1px solid var(--border)", color: "var(--text-color)" }} />
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Número de Teléfono Oficial
-                <input required type="tel" placeholder="(809) 000-0000" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+                <input required type="tel" placeholder="(809) 000-0000" style={{ padding: "1rem", borderRadius: "8px", background: "var(--secondary)", border: "1px solid var(--border)", color: "var(--text-color)" }} />
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 Dirección Física o ID de Ubicación
@@ -89,7 +89,7 @@ export default function VendorOnboardingPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Ej. Av. Winston Churchill, Plaza Central, Local 14B... o pega el Link de Google Maps" 
-                  style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white", minHeight: "100px" }} 
+                  style={{ padding: "1rem", borderRadius: "8px", background: "var(--secondary)", border: "1px solid var(--border)", color: "var(--text-color)", minHeight: "100px" }} 
                 />
               </label>
               <button 

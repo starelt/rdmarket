@@ -48,7 +48,7 @@ export default function SettingsForm({ store }: { store: any }) {
                   value={paypalEmail} 
                   onChange={e => setPaypalEmail(e.target.value)} 
                   placeholder="ejemplo@empresa.com" 
-                  style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "rgba(255,255,255,0.05)", color: "var(--foreground)" }} 
+                  style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "var(--secondary)", color: "var(--text-color)" }} 
                 />
               </label>
             </div>
@@ -63,7 +63,7 @@ export default function SettingsForm({ store }: { store: any }) {
                     value={companyLegalName} 
                     onChange={e => setCompanyLegalName(e.target.value)} 
                     placeholder="Ej. ElectroMundo SRL" 
-                    style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "rgba(255,255,255,0.05)", color: "var(--foreground)" }} 
+                    style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "var(--secondary)", color: "var(--text-color)" }} 
                   />
                 </label>
                 
@@ -74,7 +74,7 @@ export default function SettingsForm({ store }: { store: any }) {
                     value={rnc} 
                     onChange={e => setRnc(e.target.value)} 
                     placeholder="Ej. 132456789" 
-                    style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "rgba(255,255,255,0.05)", color: "var(--foreground)" }} 
+                    style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", background: "var(--secondary)", color: "var(--text-color)" }} 
                   />
                 </label>
               </div>
