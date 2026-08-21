@@ -13,6 +13,7 @@ export default function AddProductForm({ storeId }: { storeId: string }) {
   const [basePrice, setBasePrice] = useState("");
   const [applyTax, setApplyTax] = useState(false);
   const [stock, setStock] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // Cálculos Dinámicos
   const costVal = parseFloat(netCost) || 0;
@@ -55,32 +56,54 @@ export default function AddProductForm({ storeId }: { storeId: string }) {
 
   return (
     <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div className="glass animate-fade-in-up" style={{ width: "90%", maxWidth: "600px", padding: "2rem", borderRadius: "16px", maxHeight: "90vh", overflowY: "auto" }}>
+      <div style={{ background: "white", width: "90%", maxWidth: "600px", padding: "2rem", borderRadius: "16px", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-          <h2 style={{ margin: 0 }}>📦 Añadir Producto al Inventario</h2>
-          <button onClick={() => setIsOpen(false)} style={{ background: "transparent", border: "none", color: "white", fontSize: "1.5rem", cursor: "pointer" }}>×</button>
+          <h2 style={{ margin: 0, color: "#111" }}>📦 Añadir Producto al Inventario</h2>
+          <button onClick={() => setIsOpen(false)} style={{ background: "transparent", border: "none", color: "#999", fontSize: "1.5rem", cursor: "pointer" }}>×</button>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          
+          <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem", color: "#333", fontWeight: "bold" }}>
+            Foto del Producto
+            <div style={{ padding: "1.5rem", textAlign: "center", border: "2px dashed #ccc", borderRadius: "8px", cursor: "pointer", background: "#f9fafb" }}>
+              <span style={{ fontSize: "2rem" }}>📷</span>
+              <p style={{ marginTop: "0.5rem", color: "#666", fontWeight: "normal" }}>
+                {imageFile ? imageFile.name : "Haz clic para tomar foto o subir imagen"}
+              </p>
+              <input 
+                type="file" 
+                accept="image/*" 
+                capture="environment" 
+                style={{ display: "none" }} 
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setImageFile(e.target.files[0]);
+                  }
+                }}
+              />
+            </div>
+          </label>
+
+          <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem", color: "#333", fontWeight: "bold" }}>
             Nombre del Producto
-            <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ej: iPhone 14 Pro" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+            <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ej: iPhone 14 Pro" style={{ padding: "1rem", borderRadius: "8px", background: "white", border: "1px solid #ccc", color: "#111", fontWeight: "normal" }} />
           </label>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               Costo Neto (Lo que te costó)
-              <input required type="number" value={netCost} onChange={e => setNetCost(e.target.value)} placeholder="RD$ 0.00" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+              <input required type="number" value={netCost} onChange={e => setNetCost(e.target.value)} placeholder="RD$ 0.00" style={{ padding: "1rem", borderRadius: "8px", background: "white", border: "1px solid #ccc", color: "#111", fontWeight: "normal" }} />
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               Cantidad en Almacén
-              <input required type="number" value={stock} onChange={e => setStock(e.target.value)} placeholder="Ej: 15" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "white" }} />
+              <input required type="number" value={stock} onChange={e => setStock(e.target.value)} placeholder="Ej: 15" style={{ padding: "1rem", borderRadius: "8px", background: "white", border: "1px solid #ccc", color: "#111", fontWeight: "normal" }} />
             </label>
           </div>
 
           <label style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             Tu Precio de Venta (Lo que quieres ganar)
-            <input required type="number" value={basePrice} onChange={e => setBasePrice(e.target.value)} placeholder="RD$ 0.00" style={{ padding: "1rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--primary)", color: "white", fontSize: "1.2rem" }} />
+            <input required type="number" value={basePrice} onChange={e => setBasePrice(e.target.value)} placeholder="RD$ 0.00" style={{ padding: "1rem", borderRadius: "8px", background: "white", border: "1px solid var(--primary)", color: "#111", fontSize: "1.2rem" }} />
           </label>
 
           {/* Simulador Financiero Inteligente */}
